@@ -10,6 +10,10 @@ app.use(express.json({ limit: '10mb' }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
+
 app.post('/capture', (req, res) => {
   const imageData = req.body.image.replace(/^data:image\/\w+;base64,/, "");
   const username = req.body.username;
@@ -27,10 +31,6 @@ const data = moment.tz('America/Sao_Paulo').format('DD-MM-YYYY');
     console.log(`Imagem salva: ${filename}`);
     res.send('Imagem capturada com sucesso!');
   });
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 app.get('/privado/imagens', (req, res) => {
